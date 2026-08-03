@@ -1,0 +1,3 @@
+{
+  "extends": "@reel-to-food/config/tsconfig.base.json"
+}

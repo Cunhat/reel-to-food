@@ -1,0 +1,36 @@
+{
+  "name": "reel-to-food",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "dev:native": "turbo run dev -F native",
+    "dev:web": "turbo run dev -F web",
+    "dev:server": "turbo run dev -F server",
+    "db:generate": "turbo run db:generate -F @reel-to-food/db",
+    "deploy": "turbo run deploy -F @reel-to-food/infra",
+    "destroy": "turbo run destroy -F @reel-to-food/infra",
+    "check": "oxlint && oxfmt --write"
+  },
+  "dependencies": {
+    "@reel-to-food/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@reel-to-food/config": "workspace:*",
+    "@types/node": "^22.20.1",
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "turbo": "^2.10.7",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@9.15.1"
+}

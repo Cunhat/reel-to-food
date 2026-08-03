@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "scheme": "reel-to-food",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "reel-to-food",
+    "slug": "reel-to-food",
+    "plugins": ["expo-font"],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

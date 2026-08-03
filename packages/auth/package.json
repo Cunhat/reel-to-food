@@ -1,0 +1,25 @@
+{
+  "name": "@reel-to-food/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@better-auth/expo": "catalog:",
+    "@reel-to-food/db": "workspace:*",
+    "@reel-to-food/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@reel-to-food/config": "workspace:*",
+    "typescript": "^6.0.3"
+  }
+}
