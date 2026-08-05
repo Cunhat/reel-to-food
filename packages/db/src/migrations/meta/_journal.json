@@ -8,6 +8,13 @@
       "when": 1785790679817,
       "tag": "0000_grey_victor_mancha",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1785965039589,
+      "tag": "0001_hot_riptide",
+      "breakpoints": true
     }
   ]
 }
