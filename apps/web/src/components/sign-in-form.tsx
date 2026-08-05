@@ -1,6 +1,6 @@
-import { Button } from "@reel-to-food/ui/components/button";
-import { Input } from "@reel-to-food/ui/components/input";
-import { Label } from "@reel-to-food/ui/components/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";

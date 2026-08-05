@@ -1,0 +1,60 @@
+import { t as PACKAGE_VERSION } from "../version-Bbx2FRPo.js";
+//#region src/plugins/last-login-method.ts
+const paths = [
+	"/callback/",
+	"/oauth2/callback/",
+	"/sign-in/email",
+	"/sign-up/email"
+];
+const defaultResolveMethod = (url) => {
+	const { pathname } = new URL(url.toString(), "http://localhost");
+	if (paths.some((p) => pathname.includes(p))) return pathname.split("/").pop();
+	if (pathname.includes("siwe")) return "siwe";
+	if (pathname.includes("/passkey/verify-authentication")) return "passkey";
+};
+const lastLoginMethodClient = (config) => {
+	const resolveMethod = config.customResolveMethod || defaultResolveMethod;
+	const lastLoginMethodName = `${config.storagePrefix || "better-auth"}_last_login_method`;
+	const storage = config.storage;
+	return {
+		id: "last-login-method-expo",
+		version: PACKAGE_VERSION,
+		fetchPlugins: [{
+			id: "last-login-method-expo",
+			name: "Last Login Method",
+			hooks: { onResponse: async (ctx) => {
+				const lastMethod = await resolveMethod(ctx.request.url);
+				if (!lastMethod) return;
+				await storage.setItem(lastLoginMethodName, lastMethod);
+			} }
+		}],
+		getActions() {
+			return {
+				/**
+				* Get the last used login method from storage
+				*
+				* @returns The last used login method or null if not found
+				*/
+				getLastUsedLoginMethod: () => {
+					return storage.getItem(lastLoginMethodName);
+				},
+				/**
+				* Clear the last used login method from storage
+				*/
+				clearLastUsedLoginMethod: async () => {
+					await storage.deleteItemAsync(lastLoginMethodName);
+				},
+				/**
+				* Check if a specific login method was the last used
+				* @param method The method to check
+				* @returns True if the method was the last used, false otherwise
+				*/
+				isLastUsedLoginMethod: (method) => {
+					return storage.getItem(lastLoginMethodName) === method;
+				}
+			};
+		}
+	};
+};
+//#endregion
+export { lastLoginMethodClient };

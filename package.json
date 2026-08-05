@@ -14,6 +14,7 @@
     "dev:web": "turbo run dev -F web",
     "dev:server": "turbo run dev -F server",
     "db:generate": "turbo run db:generate -F @reel-to-food/db",
+    "db:push": "turbo run db:push -F @reel-to-food/db",
     "deploy": "turbo run deploy -F @reel-to-food/infra",
     "destroy": "turbo run destroy -F @reel-to-food/infra",
     "check": "oxlint && oxfmt --write"
