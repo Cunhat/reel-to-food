@@ -9,7 +9,6 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **React Native** - Build mobile apps using React
 - **Expo** - Tools for React Native development
 - **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
 - **Hono** - Lightweight, performant server framework
 - **workers** - Runtime environment
 - **Drizzle** - TypeScript-first ORM
@@ -52,29 +51,27 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 
 ## UI Customization
 
-React web apps in this stack share shadcn/ui primitives through `packages/ui`.
+Web and native each own their UI — they do not share a common component package.
 
-- Change design tokens and global styles in `packages/ui/src/styles/globals.css`
-- Update shared primitives in `packages/ui/src/components/*`
-- Adjust shadcn aliases or style config in `packages/ui/components.json` and `apps/web/components.json`
+### Web (shadcn/ui)
 
-### Add more shared components
+- Design tokens and global styles: `apps/web/src/index.css`
+- Primitives: `apps/web/src/components/ui/*`
+- Config: `apps/web/components.json`
 
-Run this from the project root to add more primitives to the shared UI package:
+Add components from `apps/web`:
 
 ```bash
-npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
+cd apps/web && npx shadcn@latest add accordion dialog popover sheet table
 ```
-
-Import shared components like this:
 
 ```tsx
-import { Button } from "@reel-to-food/ui/components/button";
+import { Button } from "@/components/ui/button";
 ```
 
-### Add app-specific blocks
+### Native
 
-If you want to add app-specific blocks instead of shared primitives, run the shadcn CLI from `apps/web`.
+Native UI lives under `apps/native` (HeroUI Native / Expo). Do not import web shadcn components there.
 
 ## Deployment
 

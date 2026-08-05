@@ -10,8 +10,7 @@
     "types": ["vite/client"],
     "rootDirs": ["."],
     "paths": {
-      "@/*": ["./src/*"],
-      "@reel-to-food/ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }
