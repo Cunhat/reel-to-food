@@ -8,11 +8,13 @@
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.9.0",
     "@reel-to-food/auth": "workspace:*",
     "@reel-to-food/db": "workspace:*",
     "@reel-to-food/env": "workspace:*",
     "better-auth": "catalog:",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.2",
     "hono": "^4.12.32",
     "zod": "catalog:"
   },

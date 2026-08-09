@@ -1,9 +1,11 @@
 import { createDb } from "@reel-to-food/db";
 import { createMiddleware } from "hono/factory";
 
+import type { AppEnv } from "../src/types";
+
 const db = createDb();
 
-export const memberMiddleware = createMiddleware(async (c, next) => {
+export const memberMiddleware = createMiddleware<AppEnv>(async (c, next) => {
   const user = c.get("user");
   if (!user) {
     return c.json({ error: "Unauthorized" }, 401);
@@ -15,8 +17,7 @@ export const memberMiddleware = createMiddleware(async (c, next) => {
   }
 
   const membership = await db.query.mapMember.findFirst({
-    where: (members, { and, eq }) =>
-      and(eq(members.mapId, mapId), eq(members.userId, user.id)),
+    where: (members, { and, eq }) => and(eq(members.mapId, mapId), eq(members.userId, user.id)),
   });
 
   if (!membership) {

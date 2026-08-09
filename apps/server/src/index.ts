@@ -4,7 +4,10 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
-const app = new Hono();
+import { maps } from "./routes/maps";
+import type { AppEnv } from "./types";
+
+const app = new Hono<AppEnv>();
 
 app.use(logger());
 app.use(
@@ -19,8 +22,7 @@ app.use(
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => createAuth().handler(c.req.raw));
 
-app.get("/", (c) => {
-  return c.text("OK");
-});
+const routes = app.route("/api/maps", maps).get("/", (c) => c.text("OK"));
 
-export default app;
+export default routes;
+export type AppType = typeof routes;
