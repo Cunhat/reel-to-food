@@ -18,7 +18,8 @@ export const ownerMiddleware = createMiddleware<AppEnv>(async (c, next) => {
   }
 
   const ownedMap = await db.query.map.findFirst({
-    where: (map, { and, eq }) => and(eq(map.id, mapId), eq(map.ownerId, user.id)),
+    where: (map, { and, eq }) =>
+      and(eq(map.id, mapId), eq(map.ownerId, user.id)),
   });
 
   if (!ownedMap) {

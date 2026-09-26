@@ -10,6 +10,7 @@ import { authMiddleware } from "../../middlewares/auth.middleware";
 import { memberMiddleware } from "../../middlewares/member.middleware";
 import { ownerMiddleware } from "../../middlewares/owner.middleware";
 import type { AppEnv } from "../types";
+import { categories } from "./categories";
 
 const db = createDb();
 
@@ -28,6 +29,8 @@ const addMemberSchema = z.object({
 export const maps = new Hono<AppEnv>();
 
 maps.use("*", authMiddleware);
+
+maps.route("/:mapId/categories", categories);
 
 // Create a map and add the current user as owner
 maps.post("/", zValidator("json", createMapSchema), async (c) => {
