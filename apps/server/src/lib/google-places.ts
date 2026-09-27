@@ -3,7 +3,8 @@ import { env } from "@reel-to-food/env/server";
 const PLACES_API_URL = "https://places.googleapis.com/v1/places";
 
 // Never use "*": every extra field bumps the billing SKU
-const DETAILS_FIELD_MASK = "id,displayName,formattedAddress,location,googleMapsUri";
+const DETAILS_FIELD_MASK =
+  "id,displayName,formattedAddress,location,googleMapsUri";
 
 // Google terms allow caching Places coordinates for at most 30 days
 export const COORDS_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -45,26 +46,36 @@ export function isCoordsStale(coordsCachedAt: Date | null, now = Date.now()) {
 
 // Place Details (New). Display fields are returned for rendering only and must
 // not be persisted; only coordinates may be cached (see COORDS_TTL_MS)
-export async function fetchPlaceDetails(googlePlaceId: string): Promise<PlaceDetailsResult> {
+export async function fetchPlaceDetails(
+  googlePlaceId: string,
+): Promise<PlaceDetailsResult> {
   const apiKey = getApiKey();
   if (!apiKey) {
     return { status: "unavailable" };
   }
 
   try {
-    const response = await fetch(`${PLACES_API_URL}/${encodeURIComponent(googlePlaceId)}`, {
-      headers: {
-        "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": DETAILS_FIELD_MASK,
+    const response = await fetch(
+      `${PLACES_API_URL}/${encodeURIComponent(googlePlaceId)}`,
+      {
+        headers: {
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask": DETAILS_FIELD_MASK,
+        },
+        signal: AbortSignal.timeout(5000),
       },
-    });
+    );
 
     if (response.status === 404) {
       return { status: "not_found" };
     }
 
     if (!response.ok) {
-      console.error("Google Place Details failed", googlePlaceId, response.status);
+      console.error(
+        "Google Place Details failed",
+        googlePlaceId,
+        response.status,
+      );
       return { status: "unavailable" };
     }
 
